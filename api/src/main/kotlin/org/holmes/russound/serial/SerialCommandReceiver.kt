@@ -36,7 +36,7 @@ class SerialCommandReceiver (
   }
 
   private fun runReadLoop() {
-    var buffer = okio.Buffer()
+    var buffer = mutableListOf<Byte>()
 
     while (shouldRun) {
       val read = inputStream.read()
@@ -44,15 +44,15 @@ class SerialCommandReceiver (
       when (state) {
         State.LOOKING_FOR_START -> {
           if (0xF0 == read) {
-            buffer = okio.Buffer()
-            buffer.writeByte(read)
+            buffer = mutableListOf()
+            buffer.add(read.toByte())
             state = State.LOOKING_FOR_END
           }
         }
         State.LOOKING_FOR_END -> {
-          buffer = buffer.writeByte(read)
+          buffer.add(read.toByte())
           if (0xF7 == read) {
-            val byteArray = buffer.readByteArray()
+            val byteArray = buffer.toByteArray()
             audioManager.processCommand(byteArray)
 
             // Begin looking for the start of the next message.
