@@ -16,10 +16,6 @@ internal class RussoundAudioQueue(val name: String, val commandSender: RussoundC
   private var actionPending = false
   private var destroyed = false
 
-  fun start() {
-    // Nothing to see here.
-  }
-
   fun stop() {
     destroyed = true
   }

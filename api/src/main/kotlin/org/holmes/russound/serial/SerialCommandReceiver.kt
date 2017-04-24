@@ -1,14 +1,14 @@
 package org.holmes.russound.serial
 
-import org.holmes.russound.RussoundCommandReceiver
+import org.holmes.russound.RussoundAudioManager
 import org.slf4j.LoggerFactory
 import java.io.InputStream
 import kotlin.concurrent.thread
 
 private val LOG = LoggerFactory.getLogger(SerialCommandReceiver::class.java)
 
-class SerialCommandReceiver internal constructor(
-    private val russoundCommandReceiver: RussoundCommandReceiver,
+class SerialCommandReceiver (
+    private val audioManager: RussoundAudioManager,
     private val inputStream: InputStream
 ) {
   private enum class State {
@@ -53,7 +53,7 @@ class SerialCommandReceiver internal constructor(
           buffer = buffer.writeByte(read)
           if (0xF7 == read) {
             val byteArray = buffer.readByteArray()
-            russoundCommandReceiver.parseCommand(byteArray)
+            audioManager.processCommand(byteArray)
 
             // Begin looking for the start of the next message.
             state = State.LOOKING_FOR_START
