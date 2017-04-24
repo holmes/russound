@@ -1,6 +1,7 @@
 package org.holmes.russound
 
 import com.google.common.truth.Truth.assertThat
+import org.holmes.russound.util.toHexByteArray
 import org.junit.Before
 import org.junit.Test
 
@@ -12,10 +13,10 @@ class RussoundCommandsUnitTest {
   lateinit var source1: Source
 
   @Before fun setUp() {
-    zone1 = Zone(0, 12, 0, "Kitchen")
-    zone2 = Zone(0, 15, 1, "Outside")
-    source0 = Source(0, 20, 0, "TV Family Room")
-    source1 = Source(0, 12, 1, "Chromecast")
+    zone1 = Zone(0, 0)
+    zone2 = Zone(0, 1)
+    source0 = Source(0, 0)
+    source1 = Source(0, 1)
     russoundCommands = RussoundCommands()
   }
 

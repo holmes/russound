@@ -1,6 +1,6 @@
 package org.holmes.russound
 
-class AudioCommander(val audioQueue: AudioQueue, val russoundCommands: RussoundCommands) {
+internal class RussoundAudioCommander(val audioQueue: RussoundAudioQueue, val russoundCommands: RussoundCommands) {
   fun requestStatus(zone: Zone) {
     audioQueue.sendCommand(russoundCommands.requestStatus(zone))
   }

@@ -1,4 +1,4 @@
-package org.holmes.russound
+package org.holmes.russound.util
 
 /**
  *  Set of chars for a half-byte.

@@ -1,19 +1,18 @@
 package org.holmes.russound
 
+import org.holmes.russound.util.toHexString
 import org.slf4j.LoggerFactory
-import java.io.OutputStream
 import java.util.LinkedList
 import java.util.concurrent.Executors
 
-private val LOG = LoggerFactory.getLogger(AudioQueue::class.java)
+private val LOG = LoggerFactory.getLogger(RussoundAudioQueue::class.java)
 
-class AudioQueue(val name: String, readerDescriptor: RussoundReaderDescriptor) {
+internal class RussoundAudioQueue(val name: String, val commandSender: RussoundCommandSender) {
   private val queue = LinkedList<ByteArray>()
   private val executor = Executors.newSingleThreadExecutor({
     Thread(it, "russound-command-writer")
   })
 
-  private var outputStream: OutputStream? = readerDescriptor.outputStream
   private var actionPending = false
   private var destroyed = false
 
@@ -23,7 +22,6 @@ class AudioQueue(val name: String, readerDescriptor: RussoundReaderDescriptor) {
 
   fun stop() {
     destroyed = true
-    outputStream = null
   }
 
   @Synchronized fun sendCommand(command: ByteArray) {
@@ -39,9 +37,7 @@ class AudioQueue(val name: String, readerDescriptor: RussoundReaderDescriptor) {
   private fun performAction(command: ByteArray) {
     executor.submit {
       LOG.info("$name sending: ${command.toHexString()}")
-      outputStream?.write(command)
-      outputStream?.flush()
-
+      commandSender.send(command)
       Thread.sleep(150)
       onActionCompleted()
     }

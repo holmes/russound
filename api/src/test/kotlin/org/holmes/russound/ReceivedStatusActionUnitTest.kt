@@ -2,6 +2,7 @@ package org.holmes.russound
 
 import com.google.common.truth.Truth.assertWithMessage
 import com.nhaarman.mockito_kotlin.mock
+import org.holmes.russound.util.toHexByteArray
 import org.junit.Test
 
 class ReceivedStatusActionUnitTest {

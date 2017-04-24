@@ -7,95 +7,95 @@ import com.nhaarman.mockito_kotlin.verify
 import org.junit.Before
 import org.junit.Test
 
-class AudioCommanderUnitTest {
-  lateinit var audioQueue: AudioQueue
-  lateinit var russoundCommands: RussoundCommands
-  lateinit var audioCommander: AudioCommander
+class RussoundAudioCommanderUnitTest {
+  private lateinit var audioQueue: RussoundAudioQueue
+  private lateinit var russoundCommands: RussoundCommands
+  private lateinit var russoundAudioCommander: RussoundAudioCommander
 
-  val zone0 = Zone(0, 10, 1, "Place")
-  val zone1 = Zone(0, 11, 2, "Place")
-  val source0 = Source(0, 10, 1, "TV")
+  val zone1 = Zone(0, 1)
+  val zone2 = Zone(0, 2)
+  val source0 = Source(0, 1)
 
   @Before fun setUp() {
     russoundCommands = mock<RussoundCommands> {
       on { turnOn(any()) }
           .doAnswer {
             val zone = it.arguments[0] as Zone
-            "Zone${zone.zoneId}On".toByteArray()
+            "Zone${zone.zoneNumber}On".toByteArray()
           }
 
       on { turnOff(any()) }
           .doAnswer {
             val zone = it.arguments[0] as Zone
-            "Zone${zone.zoneId}Off".toByteArray()
+            "Zone${zone.zoneNumber}Off".toByteArray()
           }
 
       on { listen(any(), any()) }
           .doAnswer {
             val zone = it.arguments[0] as Zone
             val source = it.arguments[1] as Source
-            "Zone${zone.zoneId}Source${source.sourceId}".toByteArray()
+            "Zone${zone.zoneNumber}Source${source.sourceNumber}".toByteArray()
           }
 
       on { volume(any(), any()) }
           .doAnswer {
             val zone = it.arguments[0] as Zone
             val level = it.arguments[1] as Int
-            "Zone${zone.zoneId}Volume$level".toByteArray()
+            "Zone${zone.zoneNumber}Volume$level".toByteArray()
           }
 
       on { volumeUp(any()) }
           .doAnswer {
             val zone = it.arguments[0] as Zone
-            "Zone${zone.zoneId}VolumeUp".toByteArray()
+            "Zone${zone.zoneNumber}VolumeUp".toByteArray()
           }
 
       on { volumeDown(any()) }
           .doAnswer {
             val zone = it.arguments[0] as Zone
-            "Zone${zone.zoneId}VolumeDown".toByteArray()
+            "Zone${zone.zoneNumber}VolumeDown".toByteArray()
           }
     }
 
     audioQueue = mock {  }
-    audioCommander = AudioCommander(audioQueue, russoundCommands)
+    russoundAudioCommander = RussoundAudioCommander(audioQueue, russoundCommands)
   }
 
   @Test fun powerOnTurnsOn() {
-    val expected = "Zone10On".toByteArray()
-    audioCommander.power(zone0, PowerChange.ON)
+    val expected = "Zone1On".toByteArray()
+    russoundAudioCommander.power(zone1, PowerChange.ON)
     verify(audioQueue).sendCommand(expected)
   }
 
   @Test fun powerOffTurnsOff() {
-    val expected = "Zone11Off".toByteArray()
-    audioCommander.power(zone1, PowerChange.OFF)
+    val expected = "Zone2Off".toByteArray()
+    russoundAudioCommander.power(zone2, PowerChange.OFF)
     verify(audioQueue).sendCommand(expected)
   }
 
   @Test fun volumeUp() {
-    val expected = "Zone11VolumeUp".toByteArray()
-    audioCommander.volume(zone1, VolumeChange.Up())
+    val expected = "Zone2VolumeUp".toByteArray()
+    russoundAudioCommander.volume(zone2, VolumeChange.Up())
     verify(audioQueue).sendCommand(expected)
   }
 
   @Test fun volumeDown() {
-    val expected = "Zone11VolumeDown".toByteArray()
-    audioCommander.volume(zone1, VolumeChange.Down())
+    val expected = "Zone2VolumeDown".toByteArray()
+    russoundAudioCommander.volume(zone2, VolumeChange.Down())
     verify(audioQueue).sendCommand(expected)
   }
   @Test fun volumeSet() {
-    val expected = "Zone11Volume22".toByteArray()
-    audioCommander.volume(zone1, VolumeChange.Set(22))
+    val expected = "Zone2Volume22".toByteArray()
+    russoundAudioCommander.volume(zone2, VolumeChange.Set(22))
     verify(audioQueue).sendCommand(expected)
   }
 
   @Test fun changeSourceChangesSource() {
-    val zone = zone0
+    val zone = zone1
     val source = source0
-    val expected = "Zone${zone.zoneId}Source${source.sourceId}".toByteArray()
+    val expected = "Zone${zone.zoneNumber}Source${source.sourceNumber}".toByteArray()
 
-    audioCommander.changeSource(zone, source)
+    russoundAudioCommander.changeSource(zone, source)
     verify(audioQueue).sendCommand(expected)
   }
 }
