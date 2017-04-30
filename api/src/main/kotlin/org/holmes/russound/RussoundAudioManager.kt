@@ -17,6 +17,9 @@ class RussoundAudioManager internal constructor(
     private val russoundCommands: RussoundCommands,
     private val commandHandlers: RussoundCommandHandlers)
 {
+  fun initialize() {
+  }
+
   fun destroy() {
     audioQueue.stop()
   }
