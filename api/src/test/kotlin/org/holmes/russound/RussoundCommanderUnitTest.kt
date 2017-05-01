@@ -8,11 +8,10 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyInt
 
-class RussoundAudioManagerUnitTest {
-  private lateinit var audioQueue: RussoundAudioQueue
+class RussoundCommanderUnitTest {
+  private lateinit var senderQueue: RussoundSenderQueue
   private lateinit var commands: RussoundCommands
-  private lateinit var commandHandler: RussoundCommandHandlers
-  private lateinit var audioManager: RussoundAudioManager
+  private lateinit var commander: RussoundCommander
 
   val zone1 = Zone(0, 1)
   val zone2 = Zone(0, 2)
@@ -128,39 +127,38 @@ class RussoundAudioManagerUnitTest {
           }
     }
 
-    audioQueue = mock { }
-    commandHandler = mock { }
-    audioManager = RussoundAudioManager(audioQueue, commands, commandHandler)
+    senderQueue = mock { }
+    commander = RussoundCommander(senderQueue, commands)
   }
 
   @Test fun powerOnTurnsOn() {
     val expected = "Zone1On".toByteArray()
-    audioManager.power(zone1, PowerChange.ON)
-    verify(audioQueue).sendCommand(expected)
+    commander.power(zone1, PowerChange.ON)
+    verify(senderQueue).sendCommand(expected)
   }
 
   @Test fun powerOffTurnsOff() {
     val expected = "Zone2Off".toByteArray()
-    audioManager.power(zone2, PowerChange.OFF)
-    verify(audioQueue).sendCommand(expected)
+    commander.power(zone2, PowerChange.OFF)
+    verify(senderQueue).sendCommand(expected)
   }
 
   @Test fun volumeUp() {
     val expected = "Zone2VolumeUp".toByteArray()
-    audioManager.volume(zone2, VolumeChange.Up())
-    verify(audioQueue).sendCommand(expected)
+    commander.volume(zone2, VolumeChange.Up())
+    verify(senderQueue).sendCommand(expected)
   }
 
   @Test fun volumeDown() {
     val expected = "Zone2VolumeDown".toByteArray()
-    audioManager.volume(zone2, VolumeChange.Down())
-    verify(audioQueue).sendCommand(expected)
+    commander.volume(zone2, VolumeChange.Down())
+    verify(senderQueue).sendCommand(expected)
   }
 
   @Test fun volumeSet() {
     val expected = "Zone2Volume22".toByteArray()
-    audioManager.volume(zone2, VolumeChange.Set(22))
-    verify(audioQueue).sendCommand(expected)
+    commander.volume(zone2, VolumeChange.Set(22))
+    verify(senderQueue).sendCommand(expected)
   }
 
   @Test fun changeSourceChangesSource() {
@@ -168,73 +166,73 @@ class RussoundAudioManagerUnitTest {
     val source = source0
     val expected = "Zone${zone.zoneNumber}Source${source.sourceNumber}".toByteArray()
 
-    audioManager.source(zone, source)
-    verify(audioQueue).sendCommand(expected)
+    commander.source(zone, source)
+    verify(senderQueue).sendCommand(expected)
   }
 
   @Test fun bassUp() {
     val expected = "Zone2BassUp".toByteArray()
-    audioManager.bass(zone2, BassLevel.UP)
-    verify(audioQueue).sendCommand(expected)
+    commander.bass(zone2, BassLevel.UP)
+    verify(senderQueue).sendCommand(expected)
   }
 
   @Test fun bassDown() {
     val expected = "Zone2BassDown".toByteArray()
-    audioManager.bass(zone2, BassLevel.DOWN)
-    verify(audioQueue).sendCommand(expected)
+    commander.bass(zone2, BassLevel.DOWN)
+    verify(senderQueue).sendCommand(expected)
   }
 
   @Test fun bassFlat() {
     val expected = "Zone2BassFlat".toByteArray()
-    audioManager.bass(zone2, BassLevel.FLAT)
-    verify(audioQueue).sendCommand(expected)
+    commander.bass(zone2, BassLevel.FLAT)
+    verify(senderQueue).sendCommand(expected)
   }
 
   @Test fun trebleUp() {
     val expected = "Zone2TrebleUp".toByteArray()
-    audioManager.treble(zone2, TrebleLevel.UP)
-    verify(audioQueue).sendCommand(expected)
+    commander.treble(zone2, TrebleLevel.UP)
+    verify(senderQueue).sendCommand(expected)
   }
 
   @Test fun trebleDown() {
     val expected = "Zone2TrebleDown".toByteArray()
-    audioManager.treble(zone2, TrebleLevel.DOWN)
-    verify(audioQueue).sendCommand(expected)
+    commander.treble(zone2, TrebleLevel.DOWN)
+    verify(senderQueue).sendCommand(expected)
   }
 
   @Test fun trebleFlat() {
     val expected = "Zone2TrebleFlat".toByteArray()
-    audioManager.treble(zone2, TrebleLevel.FLAT)
-    verify(audioQueue).sendCommand(expected)
+    commander.treble(zone2, TrebleLevel.FLAT)
+    verify(senderQueue).sendCommand(expected)
   }
 
   @Test fun balanceLeft() {
     val expected = "Zone3BalanceLeft".toByteArray()
-    audioManager.balance(zone3, Balance.LEFT)
-    verify(audioQueue).sendCommand(expected)
+    commander.balance(zone3, Balance.LEFT)
+    verify(senderQueue).sendCommand(expected)
   }
 
   @Test fun balanceRight() {
     val expected = "Zone3BalanceRight".toByteArray()
-    audioManager.balance(zone3, Balance.RIGHT)
-    verify(audioQueue).sendCommand(expected)
+    commander.balance(zone3, Balance.RIGHT)
+    verify(senderQueue).sendCommand(expected)
   }
 
   @Test fun balanceCenter() {
     val expected = "Zone3BalanceCenter".toByteArray()
-    audioManager.balance(zone3, Balance.CENTER)
-    verify(audioQueue).sendCommand(expected)
+    commander.balance(zone3, Balance.CENTER)
+    verify(senderQueue).sendCommand(expected)
   }
 
   @Test fun initialVolume() {
     val expected = "Zone3InitialVolume44".toByteArray()
-    audioManager.initialVolume(zone3, 44)
-    verify(audioQueue).sendCommand(expected)
+    commander.initialVolume(zone3, 44)
+    verify(senderQueue).sendCommand(expected)
   }
 
   @Test fun loudness() {
     val expected = "Zone3LoudnessON".toByteArray()
-    audioManager.loudness(zone3, Loudness.ON)
-    verify(audioQueue).sendCommand(expected)
+    commander.loudness(zone3, Loudness.ON)
+    verify(senderQueue).sendCommand(expected)
   }
 }

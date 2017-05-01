@@ -10,16 +10,14 @@ class SampleApp : RussoundZoneInfoListener {
     val file = Russound.autoDiscoverTTY() ?: File("/dev/null")
 
     val sender = SerialCommandSender.fromFile(file)
-    val config = RussoundConfig(zoneCount = 6, sourceCount = 6, commandSender = sender, zoneInfoListener = this)
+    val commander = Russound.sender(sender)
 
-    val audioManager = Russound.build(config)
-    val receiver = SerialCommandReceiver(audioManager, file.inputStream())
+    val translator = Russound.receiver(this)
+    val receiver = SerialCommandReceiver(translator, file.inputStream())
 
+    // Start listening and then get status updates!
     receiver.start()
-    audioManager.initialize()
-
-    // Get them status updates!
-    StatusRequestTimer(audioManager, config).start()
+    StatusRequestTimer(commander, zoneCount = 6).start()
   }
 
   override fun onNext(action: RussoundAction) {

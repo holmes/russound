@@ -9,7 +9,7 @@ import kotlin.concurrent.timer
 private val LOG = LoggerFactory.getLogger(StatusRequestTimer::class.java)
 
 /** Once started, it requests status updates periodically. */
-class StatusRequestTimer(val statusRequestor: RussoundAudioManager, val russoundConfig: RussoundConfig) {
+class StatusRequestTimer(val statusRequestor: RussoundCommander, val zoneCount: Int) {
   private var timer: Timer? = null
   private var firstRun = true
 
@@ -28,7 +28,7 @@ class StatusRequestTimer(val statusRequestor: RussoundAudioManager, val russound
         statusRequestor.requestStatus(Zone(0, 0))
       }
 
-      0.rangeTo(russoundConfig.zoneCount)
+      0.rangeTo(zoneCount)
           .map { Zone(0, it) }
           .forEach { statusRequestor.requestStatus(it) }
     }
