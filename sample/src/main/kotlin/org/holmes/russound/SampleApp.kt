@@ -2,9 +2,13 @@ package org.holmes.russound
 
 import org.holmes.russound.serial.SerialCommandReceiver
 import org.holmes.russound.serial.SerialCommandSender
+import org.slf4j.LoggerFactory
 import java.io.File
 
 class SampleApp : RussoundZoneInfoListener {
+  val zones = HashMap<Int, ZoneInfo>()
+  val logger = LoggerFactory.getLogger(SampleApp::class.java)
+
   fun init() {
     // Auto-discover the file or use /dev/null.
     val file = Russound.autoDiscoverTTY() ?: File("/dev/null")
@@ -21,11 +25,11 @@ class SampleApp : RussoundZoneInfoListener {
   }
 
   override fun onNext(action: RussoundAction) {
-    TODO("not implemented")
+    logger.info("Received action: ${action.description}")
   }
 
   override fun updated(zoneInfo: ZoneInfo) {
-    TODO("not implemented")
+    zones.put(zoneInfo.zone, zoneInfo)
   }
 }
 
