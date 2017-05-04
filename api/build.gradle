@@ -1,6 +1,3 @@
-group 'org.holmes'
-version '1.0-SNAPSHOT'
-
 apply plugin: 'kotlin'
 apply plugin: 'maven'
 apply plugin: 'signing'
@@ -30,7 +27,7 @@ signing {
 
 group = "com.thejholmes.russound"
 archivesBaseName = "api"
-version = "1.0-SNAPSHOT"
+version = "1.0"
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
