@@ -1,4 +1,4 @@
-group 'org.holmes'
+group 'com.thejholmes'
 version '1.0-SNAPSHOT'
 
 buildscript {
