@@ -2,12 +2,13 @@ package org.holmes.russound
 
 import org.holmes.russound.serial.SerialCommandReceiver
 import org.holmes.russound.serial.SerialCommandSender
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
 
 class SampleApp : RussoundZoneInfoListener {
   val zones = HashMap<Int, ZoneInfo>()
-  val logger = LoggerFactory.getLogger(SampleApp::class.java)
+  val logger: Logger = LoggerFactory.getLogger(SampleApp::class.java)
 
   fun init() {
     // Auto-discover the file or use /dev/null.
