@@ -1,8 +1,8 @@
-group 'com.thejholmes'
-version '1.0-SNAPSHOT'
+group = "com.thejholmes.russound"
+version '1.1-SNAPSHOT'
 
 buildscript {
-  ext.kotlin_version = '1.1.2-eap-77'
+  ext.kotlin_version = '1.1.2-2'
 
   repositories {
     maven { url 'http://dl.bintray.com/kotlin/kotlin-eap-1.1' }
