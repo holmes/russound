@@ -2,7 +2,6 @@ package org.holmes.russound
 
 import org.slf4j.LoggerFactory
 import java.util.Timer
-import java.util.concurrent.TimeUnit.MINUTES
 import java.util.concurrent.TimeUnit.SECONDS
 import kotlin.concurrent.timer
 
@@ -14,8 +13,8 @@ class StatusRequestTimer(val statusRequestor: RussoundCommander, val zoneCount: 
   private var firstRun = true
 
   fun start() {
-    val initialDelay = SECONDS.toMillis(5)
-    val period = MINUTES.toMillis(5)
+    val initialDelay = SECONDS.toMillis(2)
+    val period = SECONDS.toMillis(10)
 
     LOG.info("Starting timer to request audio status in ${initialDelay / 1000}s")
     timer = timer("audio-status-request-timer", false, initialDelay, period) {
@@ -28,7 +27,7 @@ class StatusRequestTimer(val statusRequestor: RussoundCommander, val zoneCount: 
         statusRequestor.requestStatus(Zone(0, 0))
       }
 
-      0.rangeTo(zoneCount)
+      0.rangeTo(zoneCount - 1)
           .map { Zone(0, it) }
           .forEach { statusRequestor.requestStatus(it) }
     }

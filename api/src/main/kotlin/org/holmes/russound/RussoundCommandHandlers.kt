@@ -4,7 +4,7 @@ import org.slf4j.LoggerFactory
 
 private val LOG = LoggerFactory.getLogger(RussoundCommandHandlers::class.java)
 
-internal class RussoundCommandHandlers(
+class RussoundCommandHandlers(
     private val name: String,
     private val listener: RussoundZoneInfoListener,
     private val actionHandlers: Set<RussoundActionHandler>) {

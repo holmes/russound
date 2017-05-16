@@ -1,4 +1,5 @@
 rootProject.name = 'russound'
 include 'api'
+include 'mock'
 include 'sample'
 

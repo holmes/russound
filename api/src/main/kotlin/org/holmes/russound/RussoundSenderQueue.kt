@@ -7,7 +7,7 @@ import java.util.concurrent.Executors
 
 private val LOG = LoggerFactory.getLogger(RussoundSenderQueue::class.java)
 
-internal class RussoundSenderQueue(val name: String, val commandSender: RussoundCommandSender) {
+class RussoundSenderQueue(val name: String, val commandSender: RussoundCommandSender) {
   private val queue = LinkedList<ByteArray>()
   private val executor = Executors.newSingleThreadExecutor({
     Thread(it, "russound-command-writer")
