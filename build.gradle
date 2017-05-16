@@ -3,6 +3,12 @@ version '1.1-SNAPSHOT'
 
 buildscript {
   ext.kotlin_version = '1.1.2-2'
+  ext.slf4j_version = '1.7.22'
+
+  ext.junit_version = '4.12'
+  ext.truth_version = '0.31'
+  ext.mockito_core_version = '2.7.21'
+  ext.mockito_kotlin_version = '1.4.0'
 
   repositories {
     maven { url 'http://dl.bintray.com/kotlin/kotlin-eap-1.1' }
