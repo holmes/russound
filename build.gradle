@@ -1,7 +1,5 @@
 apply plugin: 'maven'
 
-group = "com.thejholmes.russound"
-
 buildscript {
   ext.kotlin_version = '1.1.2-2'
   ext.slf4j_version = '1.7.22'
@@ -10,6 +8,9 @@ buildscript {
   ext.truth_version = '0.31'
   ext.mockito_core_version = '2.7.21'
   ext.mockito_kotlin_version = '1.4.0'
+
+  ext.release_groupId = "com.thejholmes.russound"
+  ext.release_version = "1.1.1"
 
   repositories {
     maven { url 'http://dl.bintray.com/kotlin/kotlin-eap-1.1' }

@@ -26,7 +26,6 @@ signing {
 }
 
 archivesBaseName = "mock"
-version = '1.1.1'
 
 dependencies {
   compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
@@ -49,6 +48,8 @@ uploadArchives {
       pom.project {
         name 'Russound Matrix Mock Receiver'
         packaging 'jar'
+        groupId = release_groupId
+        version = release_version
         artifactId 'mock'
         description 'An API that lets create a mock receiver to test your instance against.'
         url 'https://github.com/holmes/russound'
