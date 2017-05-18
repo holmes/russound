@@ -1,5 +1,15 @@
 apply plugin: 'maven'
 
+allprojects {
+  version = "1.1.2-SNAPSHOT"
+  group = "com.thejholmes.russound"
+
+  repositories {
+    maven { url 'http://dl.bintray.com/kotlin/kotlin-eap-1.1' }
+    mavenCentral()
+  }
+}
+
 buildscript {
   ext.kotlin_version = '1.1.2-2'
   ext.slf4j_version = '1.7.22'
@@ -10,20 +20,15 @@ buildscript {
   ext.mockito_kotlin_version = '1.4.0'
 
   ext.release_groupId = "com.thejholmes.russound"
-  ext.release_version = "1.1.1"
+  ext.release_version = "1.1.2-SNAPSHOT"
 
   repositories {
     maven { url 'http://dl.bintray.com/kotlin/kotlin-eap-1.1' }
     mavenCentral()
   }
+
   dependencies {
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
   }
-}
-
-repositories {
-  maven { url 'http://dl.bintray.com/kotlin/kotlin-eap-1.1' }
-  mavenCentral()
-  mavenLocal()
 }
 
