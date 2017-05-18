@@ -30,6 +30,11 @@ archivesBaseName = "mock"
 dependencies {
   compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
   compile project(":api")
+
+  testCompile "junit:junit:$junit_version"
+  testCompile "com.google.truth:truth:$truth_version"
+  testCompile "org.mockito:mockito-core:$mockito_core_version"
+  testCompile "com.nhaarman:mockito-kotlin:$mockito_kotlin_version"
 }
 
 uploadArchives {
