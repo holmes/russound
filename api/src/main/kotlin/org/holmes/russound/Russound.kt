@@ -18,16 +18,16 @@ class Russound {
           .firstOrNull { it.name.contains(pathInDev) }
     }
 
-    fun sender(commandSender: RussoundCommandSender): RussoundCommander {
-      val audioQueue = RussoundSenderQueue("app-queue", commandSender)
+    fun sender(name: String, commandSender: RussoundCommandSender): RussoundCommander {
+      val audioQueue = RussoundSenderQueue(name, commandSender)
       val commands = RussoundCommands()
 
       return RussoundCommander(audioQueue, commands)
     }
 
-    fun receiver(zoneInfoListener: RussoundZoneInfoListener): RussoundTranslator {
+    fun receiver(name: String, zoneInfoListener: RussoundZoneInfoListener): RussoundTranslator {
       val actionHandler = ReceivedStatusActionHandler()
-      val commandReceiver = RussoundCommandHandlers("app-receiver", zoneInfoListener,
+      val commandReceiver = RussoundCommandHandlers(name, zoneInfoListener,
           setOf(actionHandler))
 
       return  RussoundTranslator(commandReceiver)

@@ -22,9 +22,9 @@ class SampleApp : RussoundZoneInfoListener {
     LOG.info("Connected to socket on localhost:$MATRIX_CONNECTION_PORT")
 
     val sender = SerialCommandSender(socket.getOutputStream())
-    val commander = Russound.sender(sender)
+    val commander = Russound.sender("SampleApp", sender)
 
-    val translator = Russound.receiver(this)
+    val translator = Russound.receiver("SampleApp", this)
     val receiver = SerialCommandReceiver(translator, socket.getInputStream())
 
     // Start listening and then get status updates!

@@ -6,8 +6,10 @@ package org.holmes.russound
  * after each command is sent to the matrix.
  */
 interface RussoundZoneInfoListener {
+  /** Called for all status updates. */
   fun onNext(action: RussoundAction)
 
+  /** ZoneInfo is really what we care about, so we break this out as a special update. */
   fun updated(zoneInfo: ZoneInfo)
 }
 

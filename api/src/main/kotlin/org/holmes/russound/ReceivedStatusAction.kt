@@ -50,20 +50,24 @@ class ReceivedStatusActionHandler : RussoundActionHandler {
 class ReceivedStatusAction(override val input: ByteArray) : RussoundAction {
   override val zoneOffset = 12
 
-  override fun applyTo(currentZoneInfo: ZoneInfo): ZoneInfo {
-    val zone = input[12].toInt()
-    val source = input[21].toInt()
+  val zoneInfo: ZoneInfo
+    get() {
+      val zone = input[12].toInt()
+      val source = input[21].toInt()
 
-    // Convert from Russound code to something human readable.
-    val power = input[20] == 1.toByte()
-    val volume = input[22].toInt() * 2
-    val bass = input[23].toInt() - 10
-    val treble = input[24].toInt() - 10
-    val loudness = input[25] == 1.toByte()
-    val balance = input[26].toInt() - 10
+      // Convert from Russound code to something human readable.
+      val power = input[20] == 1.toByte()
+      val volume = input[22].toInt() * 2
+      val bass = input[23].toInt() - 10
+      val treble = input[24].toInt() - 10
+      val loudness = input[25] == 1.toByte()
+      val balance = input[26].toInt() - 10
 
-    return ZoneInfo(zone, source, power, volume, bass, treble, balance, loudness)
-  }
+      return ZoneInfo(zone, source, power, volume, bass, treble, balance, loudness)
+    }
+
+  override fun applyTo(currentZoneInfo: ZoneInfo): ZoneInfo = zoneInfo
+
   override fun generateResponse(updatedZoneInfo: ZoneInfo): ByteArray {
     return RussoundMatrixToAppCommands.Responses.returnStatus(updatedZoneInfo)
   }

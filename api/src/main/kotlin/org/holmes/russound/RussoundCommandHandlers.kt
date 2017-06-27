@@ -17,6 +17,10 @@ class RussoundCommandHandlers(
           val action = it.createAction(command)
           LOG.info("$name received: ${action.description}")
           listener.onNext(action)
+
+          if (action is ReceivedStatusAction) {
+            listener.updated(action.zoneInfo)
+          }
         }
   }
 }
