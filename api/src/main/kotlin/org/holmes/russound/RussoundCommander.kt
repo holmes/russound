@@ -39,8 +39,8 @@ class RussoundCommander internal constructor(
   }
 
   /** Sets the initial volume when the zone is turned on. */
-  fun initialVolume(zone: Zone, volume: Int) {
-    senderQueue.sendCommand(russoundCommands.turnOnVolume(zone, volume))
+  fun initialVolume(zone: Zone, volume: VolumeChange.Set) {
+    senderQueue.sendCommand(russoundCommands.turnOnVolume(zone, volume.level))
   }
 
   fun volume(zone: Zone, volume: VolumeChange) {
@@ -53,25 +53,28 @@ class RussoundCommander internal constructor(
 
   fun bass(zone: Zone, bass: BassLevel) {
     senderQueue.sendCommand(when (bass) {
-      BassLevel.UP -> russoundCommands.bassUp(zone)
-      BassLevel.DOWN -> russoundCommands.bassDown(zone)
-      BassLevel.FLAT -> russoundCommands.bassFlat(zone)
+      is BassLevel.Up -> russoundCommands.bassUp(zone)
+      is BassLevel.Down -> russoundCommands.bassDown(zone)
+      is BassLevel.Flat -> russoundCommands.bassSet(zone, 0)
+      is BassLevel.Set -> russoundCommands.bassSet(zone, bass.level)
     })
   }
 
   fun treble(zone: Zone, treble: TrebleLevel) {
     senderQueue.sendCommand(when (treble) {
-      TrebleLevel.UP -> russoundCommands.trebleUp(zone)
-      TrebleLevel.DOWN -> russoundCommands.trebleDown(zone)
-      TrebleLevel.FLAT -> russoundCommands.trebleFlat(zone)
+      is TrebleLevel.Up -> russoundCommands.trebleUp(zone)
+      is TrebleLevel.Down -> russoundCommands.trebleDown(zone)
+      is TrebleLevel.Flat -> russoundCommands.trebleSet(zone, 0)
+      is TrebleLevel.Set -> russoundCommands.trebleSet(zone, treble.level)
     })
   }
 
   fun balance(zone: Zone, balance: Balance) {
     senderQueue.sendCommand(when (balance) {
-      Balance.LEFT -> russoundCommands.balanceLeft(zone)
-      Balance.RIGHT -> russoundCommands.balanceRight(zone)
-      Balance.CENTER -> russoundCommands.balanceCentered(zone)
+      is Balance.Left -> russoundCommands.balanceLeft(zone)
+      is Balance.Right -> russoundCommands.balanceRight(zone)
+      is Balance.Center -> russoundCommands.balanceSet(zone, 0)
+      is Balance.Set -> russoundCommands.balanceSet(zone, balance.level)
     })
   }
 

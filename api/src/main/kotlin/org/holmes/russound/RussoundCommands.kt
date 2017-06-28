@@ -61,11 +61,12 @@ class RussoundCommands {
     return bytes
   }
 
-  fun bassFlat(zone: Zone): ByteArray {
+  /** @param level should be a range from -10 -> 10 */
+  fun bassSet(zone: Zone, level: Int): ByteArray {
     val bytes = bassSetBytes
 
     bytes[11] = zone.zoneNumber.toByte()
-    bytes[21] = 0x0A
+    bytes[21] = (level + 10).toByte()
     bytes[22] = calculateChecksum(bytes)
 
     return bytes
@@ -91,11 +92,12 @@ class RussoundCommands {
     return bytes
   }
 
-  fun trebleFlat(zone: Zone): ByteArray {
+  /** @param level should be a range from -10 -> 10 */
+  fun trebleSet(zone: Zone, level: Int): ByteArray {
     val bytes = trebleSetBytes
 
     bytes[11] = zone.zoneNumber.toByte()
-    bytes[21] = 0x0A
+    bytes[21] = (level + 10).toByte()
     bytes[22] = calculateChecksum(bytes)
 
     return bytes
@@ -131,11 +133,12 @@ class RussoundCommands {
     return bytes
   }
 
-  fun balanceCentered(zone: Zone): ByteArray {
+  /** @param level should be a range from -10 -> 10 */
+  fun balanceSet(zone: Zone, level: Int): ByteArray {
     val bytes = Bytes.balanceSetBytes
 
     bytes[11] = zone.zoneNumber.toByte()
-    bytes[21] = 0x0A
+    bytes[21] = (level + 10).toByte()
     bytes[22] = calculateChecksum(bytes)
 
     return bytes

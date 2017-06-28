@@ -151,12 +151,12 @@ class RussoundCommandsUnitTest {
 
   @Test fun testBassFlatZone1() {
     val expected = "F000007F00007000050200000000000000010001000A08F7".toHexByteArray()
-    assertThat(russoundCommands.bassFlat(zone1)).isEqualTo(expected)
+    assertThat(russoundCommands.bassSet(zone1, 0)).isEqualTo(expected)
   }
 
   @Test fun testBassFlatZone2() {
     val expected = "F000007F00007000050200010000000000010001000A09F7".toHexByteArray()
-    assertThat(russoundCommands.bassFlat(zone2)).isEqualTo(expected)
+    assertThat(russoundCommands.bassSet(zone2, 0)).isEqualTo(expected)
   }
 
   @Test fun testTrebleUpZone1() {
@@ -181,12 +181,12 @@ class RussoundCommandsUnitTest {
 
   @Test fun testTrebleFlatZone1() {
     val expected = "F000007F00007000050200000001000000010001000A09F7".toHexByteArray()
-    assertThat(russoundCommands.trebleFlat(zone1)).isEqualTo(expected)
+    assertThat(russoundCommands.trebleSet(zone1, 0)).isEqualTo(expected)
   }
 
   @Test fun testTrebleFlatZone2() {
     val expected = "F000007F00007000050200010001000000010001000A0AF7".toHexByteArray()
-    assertThat(russoundCommands.trebleFlat(zone2)).isEqualTo(expected)
+    assertThat(russoundCommands.trebleSet(zone2, 0)).isEqualTo(expected)
   }
 
   @Test fun testLoudnessOnZone1() {
@@ -231,11 +231,11 @@ class RussoundCommandsUnitTest {
 
   @Test fun testBalanceCenteredZone1() {
     val expected = "F000007F00007000050200000003000000010001000A0BF7".toHexByteArray()
-    assertThat(russoundCommands.balanceCentered(zone1)).isEqualTo(expected)
+    assertThat(russoundCommands.balanceSet(zone1, 0)).isEqualTo(expected)
   }
 
   @Test fun testBalanceCenteredZone2() {
     val expected = "F000007F00007000050200010003000000010001000A0CF7".toHexByteArray()
-    assertThat(russoundCommands.balanceCentered(zone2)).isEqualTo(expected)
+    assertThat(russoundCommands.balanceSet(zone2, 0)).isEqualTo(expected)
   }
 }

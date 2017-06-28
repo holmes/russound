@@ -2,6 +2,7 @@ package org.holmes.russound
 
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doAnswer
+import com.nhaarman.mockito_kotlin.eq
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import org.junit.Before
@@ -70,7 +71,7 @@ class RussoundCommanderUnitTest {
             "Zone${zone.zoneNumber}BassDown".toByteArray()
           }
 
-      on { bassFlat(any()) }
+      on { bassSet(any(), eq(0)) }
           .doAnswer {
             val zone = it.arguments[0] as Zone
             "Zone${zone.zoneNumber}BassFlat".toByteArray()
@@ -88,7 +89,7 @@ class RussoundCommanderUnitTest {
             "Zone${zone.zoneNumber}TrebleDown".toByteArray()
           }
 
-      on { trebleFlat(any()) }
+      on { trebleSet(any(), eq(0)) }
           .doAnswer {
             val zone = it.arguments[0] as Zone
             "Zone${zone.zoneNumber}TrebleFlat".toByteArray()
@@ -106,7 +107,7 @@ class RussoundCommanderUnitTest {
             "Zone${zone.zoneNumber}BalanceRight".toByteArray()
           }
 
-      on { balanceCentered(any()) }
+      on { balanceSet(any(), eq(0)) }
           .doAnswer {
             val zone = it.arguments[0] as Zone
             "Zone${zone.zoneNumber}BalanceCenter".toByteArray()
@@ -172,61 +173,61 @@ class RussoundCommanderUnitTest {
 
   @Test fun bassUp() {
     val expected = "Zone2BassUp".toByteArray()
-    commander.bass(zone2, BassLevel.UP)
+    commander.bass(zone2, BassLevel.Up())
     verify(senderQueue).sendCommand(expected)
   }
 
   @Test fun bassDown() {
     val expected = "Zone2BassDown".toByteArray()
-    commander.bass(zone2, BassLevel.DOWN)
+    commander.bass(zone2, BassLevel.Down())
     verify(senderQueue).sendCommand(expected)
   }
 
   @Test fun bassFlat() {
     val expected = "Zone2BassFlat".toByteArray()
-    commander.bass(zone2, BassLevel.FLAT)
+    commander.bass(zone2, BassLevel.Flat())
     verify(senderQueue).sendCommand(expected)
   }
 
   @Test fun trebleUp() {
     val expected = "Zone2TrebleUp".toByteArray()
-    commander.treble(zone2, TrebleLevel.UP)
+    commander.treble(zone2, TrebleLevel.Up())
     verify(senderQueue).sendCommand(expected)
   }
 
   @Test fun trebleDown() {
     val expected = "Zone2TrebleDown".toByteArray()
-    commander.treble(zone2, TrebleLevel.DOWN)
+    commander.treble(zone2, TrebleLevel.Down())
     verify(senderQueue).sendCommand(expected)
   }
 
   @Test fun trebleFlat() {
     val expected = "Zone2TrebleFlat".toByteArray()
-    commander.treble(zone2, TrebleLevel.FLAT)
+    commander.treble(zone2, TrebleLevel.Flat())
     verify(senderQueue).sendCommand(expected)
   }
 
   @Test fun balanceLeft() {
     val expected = "Zone3BalanceLeft".toByteArray()
-    commander.balance(zone3, Balance.LEFT)
+    commander.balance(zone3, Balance.Left())
     verify(senderQueue).sendCommand(expected)
   }
 
   @Test fun balanceRight() {
     val expected = "Zone3BalanceRight".toByteArray()
-    commander.balance(zone3, Balance.RIGHT)
+    commander.balance(zone3, Balance.Right())
     verify(senderQueue).sendCommand(expected)
   }
 
   @Test fun balanceCenter() {
     val expected = "Zone3BalanceCenter".toByteArray()
-    commander.balance(zone3, Balance.CENTER)
+    commander.balance(zone3, Balance.Center())
     verify(senderQueue).sendCommand(expected)
   }
 
   @Test fun initialVolume() {
     val expected = "Zone3InitialVolume44".toByteArray()
-    commander.initialVolume(zone3, 44)
+    commander.initialVolume(zone3, VolumeChange.Set(44))
     verify(senderQueue).sendCommand(expected)
   }
 
