@@ -5,9 +5,8 @@ import org.slf4j.LoggerFactory
 import java.util.LinkedList
 import java.util.concurrent.Executors
 
-private val LOG = LoggerFactory.getLogger(RussoundSenderQueue::class.java)
-
 class RussoundSenderQueue(val name: String, val commandSender: RussoundCommandSender) {
+  private val logger = LoggerFactory.getLogger(RussoundSenderQueue::class.java)
   private val queue = LinkedList<ByteArray>()
   private val executor = Executors.newSingleThreadExecutor({
     Thread(it, "russound-command-writer")
@@ -32,7 +31,7 @@ class RussoundSenderQueue(val name: String, val commandSender: RussoundCommandSe
 
   private fun performAction(command: ByteArray) {
     executor.submit {
-      LOG.info("$name sending: ${command.toHexString()}")
+      logger.debug("$name sending: ${command.toHexString()}")
       commandSender.send(command)
       Thread.sleep(150)
       onActionCompleted()

@@ -2,12 +2,12 @@ package com.thejholmes.russound
 
 import org.slf4j.LoggerFactory
 
-private val LOG = LoggerFactory.getLogger(RussoundCommandHandlers::class.java)
-
 class RussoundCommandHandlers(
     private val name: String,
     private val listener: RussoundZoneInfoListener,
     private val actionHandlers: Set<RussoundActionHandler>) {
+
+  private val logger = LoggerFactory.getLogger(RussoundCommandHandlers::class.java)
 
   /** Commands should start with 0xF0 and end with 0xF7. */
   fun parseCommand(command: ByteArray) {
@@ -15,7 +15,7 @@ class RussoundCommandHandlers(
         .filter { it.canHandle(command) }
         .forEach {
           val action = it.createAction(command)
-          LOG.info("$name received: ${action.description}")
+          logger.debug("$name received: ${action.description}")
           listener.onNext(action)
 
           if (action is ReceivedStatusAction) {

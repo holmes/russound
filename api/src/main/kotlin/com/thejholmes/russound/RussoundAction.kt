@@ -31,7 +31,7 @@ interface RussoundAction {
     get() = input[zoneOffset].toInt()
 
   val description: String
-    get() = "${this::class.java.typeName} for Zone $zone"
+    get() = "${this::class.java.simpleName} for Zone $zone"
 
   fun applyTo(currentZoneInfo: ZoneInfo): ZoneInfo
 
