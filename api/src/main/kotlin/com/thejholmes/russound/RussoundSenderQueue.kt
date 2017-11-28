@@ -13,14 +13,18 @@ class RussoundSenderQueue(val name: String, val commandSender: RussoundCommandSe
   })
 
   private var actionPending = false
-  private var destroyed = false
+  private var disposed = false
 
-  fun stop() {
-    destroyed = true
+  fun initialize() {
+    disposed = false
+  }
+
+  fun dispose() {
+    disposed = true
   }
 
   @Synchronized fun sendCommand(command: ByteArray) {
-    if (destroyed) return
+    if (disposed) return
 
     if (queue.isEmpty() && !actionPending) {
       performAction(command)
@@ -31,9 +35,12 @@ class RussoundSenderQueue(val name: String, val commandSender: RussoundCommandSe
 
   private fun performAction(command: ByteArray) {
     executor.submit {
+      if (disposed) return@submit
+
       logger.debug("$name sending: ${command.toHexString()}")
       commandSender.send(command)
       Thread.sleep(150)
+
       onActionCompleted()
     }
   }

@@ -22,7 +22,13 @@ class SerialCommandReceiver (
     state = State.LOOKING_FOR_START
   }
 
+  fun dispose() {
+    shouldRun = false
+  }
+
   fun start() {
+    shouldRun = true
+    
     thread(true, true, null, "audio-status-receiver") {
       try {
         runReadLoop()
@@ -61,10 +67,6 @@ class SerialCommandReceiver (
         }
       }
     }
-  }
-
-  fun stop() {
-    shouldRun = false
   }
 }
 

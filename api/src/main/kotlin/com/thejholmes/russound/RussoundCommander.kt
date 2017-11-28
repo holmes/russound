@@ -12,15 +12,19 @@ interface RussoundCommandSender {
  * Note that all calls are asynchronous, you'll get responses if you set up a
  * {@link RussoundTranslator}.
  *
- * You can call {@link #destroy} to stop queuing up commands to the RussoundCommandSender.
+ * You can call {@link #dispose} to dispose queuing up commands to the RussoundCommandSender.
  *
  * Note: you need to handle closing streams yourself - this library won't do it for you.
  */
 class RussoundCommander internal constructor(
     private val senderQueue: RussoundSenderQueue,
     private val russoundCommands: RussoundCommands) {
-  fun destroy() {
-    senderQueue.stop()
+  fun initialize() {
+    senderQueue.initialize()
+  }
+
+  fun dispose() {
+    senderQueue.dispose()
   }
 
   fun requestStatus(zone: Zone) {
