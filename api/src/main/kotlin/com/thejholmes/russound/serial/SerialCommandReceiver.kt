@@ -35,8 +35,6 @@ class SerialCommandReceiver (
       } catch(e: Exception) {
         LOG.error("Error receiving bytes", e)
         runReadLoop()
-      } finally {
-        inputStream.close()
       }
     }
   }

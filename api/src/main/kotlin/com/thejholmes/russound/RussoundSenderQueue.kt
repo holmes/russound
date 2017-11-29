@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory
 import java.util.LinkedList
 import java.util.concurrent.Executors
 
-class RussoundSenderQueue(val name: String, val commandSender: RussoundCommandSender) {
+class RussoundSenderQueue(private val name: String, private val commandSender: RussoundCommandSender) {
   private val logger = LoggerFactory.getLogger(RussoundSenderQueue::class.java)
   private val queue = LinkedList<ByteArray>()
   private val executor = Executors.newSingleThreadExecutor({

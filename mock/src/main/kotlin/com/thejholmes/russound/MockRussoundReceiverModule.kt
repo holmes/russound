@@ -1,8 +1,8 @@
 package com.thejholmes.russound
 
-import org.slf4j.LoggerFactory
 import com.thejholmes.russound.serial.SerialCommandReceiver
 import com.thejholmes.russound.serial.SerialCommandSender
+import org.slf4j.LoggerFactory
 import java.io.InputStream
 import java.io.OutputStream
 import java.util.Random

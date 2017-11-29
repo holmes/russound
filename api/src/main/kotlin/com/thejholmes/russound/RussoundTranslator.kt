@@ -14,7 +14,7 @@ interface RussoundZoneInfoListener {
 }
 
 /** Translates ByteArray(s) into commands. */
-class RussoundTranslator(val commandHandlers: RussoundCommandHandlers) {
+class RussoundTranslator(private val commandHandlers: RussoundCommandHandlers) {
 
   /**
    * When you receive a response from the matrix, pass it to this function. We'll decode and update
